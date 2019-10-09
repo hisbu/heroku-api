@@ -43,11 +43,11 @@ module.exports={
         })        
     },
     getStatus:(req,res)=>{
-        
         const {order_id} = req.body
         console.log('========masuk getStatus =============')
         console.log(order_id)
-
+        req.app.io.emit('status_transaction', req.body.transaction_status)
+        console.log(req.body)
         snap.transaction.status(order_id)
         .then((Response)=>{
             console.log('=======masuk status=========')

@@ -1,7 +1,7 @@
 const express = require('express')
 const { midtrans } = require('../controllers')
 
-const router = express.Router()
+const router = express.Router() 
 
 // router.get('/getRoles', rolesController.getRoles)
 router.post('/midtrans', midtrans.getMidtrans)

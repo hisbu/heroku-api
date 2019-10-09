@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
-
+const socketIo = require('socket-io')
+const http = require('http')
 const cors      = require('cors')
 const bodyparser= require('body-parser')
 const moment    = require('moment')
@@ -8,6 +9,19 @@ const bearerToken  = require('express-bearer-token')
 
 const port = process.env.PORT || 5000
 
+const server = http.createServer(app)
+const io = socketIo(server)
+
+app.io = io
+
+io.on('connection', socket => {
+  console.log('connected')
+
+  socket.on('disconnect', ()=>{
+    console.log('disconnected')
+  })
+})
+// app.status = status
 // express()
 //   .use(express.static(path.join(__dirname, 'public')))
 //   .use(cors())
