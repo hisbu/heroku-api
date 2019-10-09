@@ -9,18 +9,7 @@ const bearerToken  = require('express-bearer-token')
 
 const port = process.env.PORT || 5000
 
-const server = http.createServer(app)
-const io = socketIo(server)
 
-app.io = io
-
-io.on('connection', socket => {
-  console.log('connected')
-
-  socket.on('disconnect', ()=>{
-    console.log('disconnected')
-  })
-})
 // app.status = status
 // express()
 //   .use(express.static(path.join(__dirname, 'public')))
@@ -39,7 +28,18 @@ app.use(bearerToken())
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({extended: false}))
 app.use(express.static('public'))
+const server = http.createServer(app)
+const io = socketIo(server)
 
+app.io = io
+
+io.on('connection', socket => {
+  console.log('connected')
+
+  socket.on('disconnect', ()=>{
+    console.log('disconnected')
+  })
+})
 app.get('/',(req,res)=>{
     res.status(200).send(`
     <h1>Selamat datang di <b>Qlas rest-api</b></h1>
